@@ -1,5 +1,38 @@
 import './style.css';
 
+const skillsData = [
+    {
+        skill:"HTML+CSS",
+        level:"advanced",
+        color: "#338cff"
+    },
+    {
+        skill: "JavaScript",
+        level: "intermediate",
+        color: "yellow"
+    },
+    {
+        skill: "Web Design",
+        level: "advanced",
+        color: "#90EE90"
+    },
+    {
+        skill: "Git and GitHub",
+        level: "advanced",
+        color: "red"
+    },
+    {
+        skill: "React",
+        level: "beginner",
+        color: "aqua"
+    },
+    {
+        skill: "Tailwind",
+        level: "advanced",
+        color: "red"
+    }
+];
+
 function App(){
     return(
         <div className="container">
@@ -46,7 +79,7 @@ function Description(){
 function SkillsContainer(){
     return(
         <div className='skill-container'>
-            <Skills
+            {/* <Skills
                 value="HTML+CSS 💪"
                 color="#338cff"
             />
@@ -69,18 +102,34 @@ function SkillsContainer(){
              <Skills
                 value="Tailwind 💪"
                 color="red"
-             />
+             /> */}
+
+            {/* Entering js-mode inside jsx require {} */}
+            
+            {
+                skillsData.map((skills) => (<Skills obj={skills} key={skills.skill} />))
+            }
+            
         </div>
     );
 }
 
-function Skills(props){
-    const style={
-        backgroundColor:props.color
-    }
-    console.log(props);
-    return(
-        <span className='skills' style={style}>{props.value}</span>
+// function Skills(props){
+//     const style={
+//         backgroundColor:props.color
+//     }
+//     console.log(props);
+//     return(
+//         <span className='skills' style={style}>{props.value}</span>
+//     );
+// }
+
+function Skills({obj}){
+    console.log({obj});
+    let emoji;
+    obj.level === "beginner" ? emoji="👶": (obj.level === "intermediate" ? emoji="👍" : emoji="💪")
+    return (
+        <span className='skills' style = {{backgroundColor:obj.color}} >{obj.skill}{emoji}</span>
     );
 }
 
