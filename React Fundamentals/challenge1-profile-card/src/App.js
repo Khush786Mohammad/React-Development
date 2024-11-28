@@ -3,7 +3,9 @@ import './style.css';
 function App(){
     return(
         <div className="container">
-            <Image />
+            <Image 
+                url="./berserk.jpg"
+            />
             <Heading />
             <Description />
             <SkillsContainer />
@@ -11,33 +13,42 @@ function App(){
     );
 }
 
-function Image(){
+function Image(props){
+    console.log(props);
+    const style = {
+        backgroundImage: `url(${props.url})`,
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
+
+    }
     return(
-        <img src="./berserk.jpg" alt="berserk" style={{width:"400px"}}></img>
+        <div className='image-container' style={style}>
+
+        </div>
     );
 }
 
 function Heading(){
     return(
-        <h1>Khush Mohammad</h1>
+        <h1 className='heading'>Khush Mohammad</h1>
     );
 }
 
 function Description(){
     return(
-        <p>Front-End web developer and B.Tech graduate student in Computer Science and Engineering. 
+        <p className='desc'>Front-End web developer and B.Tech graduate student in Computer Science and Engineering. 
            When not coding and building anything I like to watch youtube, earlier I like to play football and 
-           pc games and also love to spend evening time with a chai and bicuit
+           pc games and also love to spend evening time with a chai and bicuit.
         </p>
     );
 }
 
 function SkillsContainer(){
     return(
-        <div>
+        <div className='skill-container'>
             <Skills
                 value="HTML+CSS 💪"
-                color="blue"
+                color="#338cff"
             />
             <Skills
                 value="JavaScript 👍"
@@ -69,7 +80,7 @@ function Skills(props){
     }
     console.log(props);
     return(
-        <span style={style}>{props.value}</span>
+        <span className='skills' style={style}>{props.value}</span>
     );
 }
 
