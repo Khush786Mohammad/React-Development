@@ -45,7 +45,7 @@ body {
   text-transform: uppercase;
   text-align: center;
   font-size: 5.2rem;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 3px;
   position: relative;
   width: 100%;
@@ -60,15 +60,15 @@ body {
   width: 12rem;
   background-color: #edc84b;
   position: absolute;
-  top: calc(50% - 1px);
+  top: calc(50%);
 }
 
 .header h1::before {
-  left: 0;
+  left: -8%;
 }
 
 .header h1::after {
-  right: 0;
+  right: -8%;
 }
 
 /* *************** */

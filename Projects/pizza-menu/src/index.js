@@ -73,53 +73,99 @@ function Header() {
 }
 
 function Menu() {
+    const pizzas = pizzaData;
+    const numPizzas = pizzas.length;
     return (
         <main className="menu">
-            <h1>Menu</h1>
-            <Pizza 
+            <h2>Our Menu</h2>
+            {
+                numPizzas > 0 ? 
+                <>
+                    <p>
+                    Authentic Italian cuisine. 6 creative dishes to choose from.
+                    All from our stone oven, all organic, all delicious.
+                    </p>
+
+                    <ul className="pizzas">
+                        {
+                            pizzaData.map((pizza) => {
+                                return <Pizza obj={pizza} key={pizza.name}/>;
+                            })
+                        }
+                    </ul>
+                </>
+            : <p>We'r still working on our menu. Please come back later :)</p>
+            }
+            {/* <Pizza 
                 name="Pizza Spinaci"
                 ingredient='Tomato, mozarella, ham, aragula, and burrata cheese'
-                photo='pizzas/spinaci.jpg'
+                photoName='pizzas/spinaci.jpg'
                 price={250}
             />
 
             <Pizza 
                 name="Pizza Funghi"
-                photo='pizzas/funghi.jpg'
+                photoName='pizzas/funghi.jpg'
                 ingredient="Tomato, mushrooms"
                 price={100}
-            />
+            /> */}
+            
         </main>
     );
 }
 
 function Pizza(props){
-    console.log(props)
+    //instead of using props.obj.photoName, props.obj.name everytime for every different values 
+    // we can destruct the props simply by below line or also we can do the same in the component parameter itself like in footer component
+    const {obj} = props; //destructing props 
+    console.log(obj);
+
     return (
-       <div className="pizza">
-           <img src={props.photo} alt={props.name}></img>
+       <li className={`pizza ${obj.soldOut ? "sold-out" : ""}`}>
+           <img src={obj.photoName} alt={obj.name}></img>
            <div>
-           <h3>{props.name}</h3>
-           <p>{props.ingredient}</p>
-           <span>{props.price}</span>
+            <h3>{obj.name}</h3>
+            <p>{obj.ingredients}</p>
+            {/* {
+                obj.soldOut?
+                <span>SOLD OUT</span>
+                :
+                <span>{obj.price}</span>
+            } */}
+            <span>{
+                obj.soldOut ? "SOLD OUT" : obj.price
+                }</span>
            </div>
-       </div>
+       </li>
     );
 }
 
 function Footer(){
-    // const hour = new Date().getHours();
-    // const openHour = 12;
-    // const closeHour = 22;
+    const hour = new Date().getHours();
+    const openHour = 12;
+    const closeHour = 22;
 
-    // if(hour >= openHour && hour<=closeHour)
-    //     alert("We're currently open!");
-    // else
-    //     alert("Sorry We're closed");
+    const isOpen = hour >= openHour && hour <= closeHour;
+    console.log(isOpen);
     return (
         <footer className="footer">
-            {new Date().toLocaleTimeString()} We are currently open!
+            {
+                //enter js mode 
+                isOpen ? 
+                (<Order openHour={openHour} closeHour={closeHour}/>)
+                :
+                (<p>Sorry we'r closed now please comeback at {openHour}:00 😘</p>)
+            }
         </footer>
+    )
+}
+// destructring props in Order component
+function Order({openHour,closeHour}){
+    return (
+        <div className="order">
+            <p>We'r open from {openHour}:00 to {closeHour}:00. Come visit us or order online</p>
+            <button className="btn">Order</button>
+        </div>
     )
 }
 
