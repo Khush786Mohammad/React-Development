@@ -72,6 +72,10 @@ input {
   cursor: pointer;
 }
 
+input[type="text"]:focus , select:focus{
+  outline:none;
+}
+
 .add-form button {
   text-transform: uppercase;
   background-color: #76c7ad;
