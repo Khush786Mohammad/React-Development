@@ -1,19 +1,26 @@
 import {useState} from "react";
 
-const initialItems = [
-    { id: 1, description: "Passports", quantity: 2, packed: false },
-    { id: 2, description: "Socks", quantity: 12, packed: false },
-    { id: 3, description: "Charger", quantity: 1, packed: true },
-  ];
-
 const optionList = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
 export default function App(){
+    const [items, setItems] = useState([]);
+
+    function handleAddItems(item){
+        setItems( (items) => [...items , item] );
+    }
+
+    function handleDeleteItem(id){
+        setItems( (items) => items.filter(item=>item.id !== id) )
+    }
+
+    function handleToggleItem(id){
+        setItems( (items) => items.map( item => item.id === id ? {...item , packed: !item.packed} : item) )
+    }
     return (
         <div className="app">
             <Logo />
-            <Form />
-            <PackingList />
+            <Form onAddItems = {handleAddItems}/>
+            <PackingList items={items} onDeleteItem = {handleDeleteItem} onToggleItem={handleToggleItem}/>
             <Stats />
         </div>
     )
@@ -25,30 +32,30 @@ function Logo(){
     )
 }
 
-function Form(){
-    
-
+function Form({onAddItems}){
     const [description, setDescription] = useState("");
-    const [optionValue, setOptionValue] = useState(1);
+    const [quantity, setQuantity] = useState(1);
 
     function handleSubmit(e){
         e.preventDefault();
         if(!description)
             return;
-        // initialItems.push({id:4,description: description, quantity: optionValue, packed:false})
-        const newItem = {id: Date.now(), description, optionValue, packed: false}
+
+        const newItem = {id: Date.now(), description, quantity, packed: false}
         console.log(newItem);
 
+        onAddItems(newItem);
+
         setDescription((val) => "");
-        setOptionValue((val) => 1);
+        setQuantity((val) => 1);
     }
 
     return (
         <form className="add-form" onSubmit = { (e)=> handleSubmit(e) }>
             <h3>What do you need for your 😍 trip?</h3>
             <select
-              value={optionValue}
-              onChange = { (e) => setOptionValue(parseInt(e.target.value)) }
+              value={quantity}
+              onChange = { (e) => setQuantity(parseInt(e.target.value)) }
             >
                { optionList.map( (num)=> (<option value={num} key={num} > {num} </option> ))}
             </select>
@@ -64,24 +71,27 @@ function Form(){
     )
 }
 
-function PackingList(){
+function PackingList({items, onDeleteItem, onToggleItem}){
     return (
         <div className="list">
             <ul>
                 {
-                    initialItems.map((item) => 
-                    <Item value={item} key={item.id}/>)
+                    items.map((item) => 
+                    <Item value={item} onDeleteItem={onDeleteItem} onToggleItem={onToggleItem} key={item.id}/>)
                 }
             </ul>
         </div>
     )
 }
 
-function Item({value}){
+function Item({value, onDeleteItem, onToggleItem}){
     return (
         <li> 
+            <input type="checkbox" value={value.packed}
+                onChange = {() => {onToggleItem(value.id)}}
+            />
             <span style={ value.packed ? {textDecoration:"line-through"} : {} }>{value.quantity} {value.description}</span>
-            <button>❌</button>
+            <button onClick={()=>onDeleteItem(value.id)}>❌</button>
         </li>
     )
 }
