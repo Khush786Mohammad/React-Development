@@ -94,7 +94,7 @@ input[type="text"]:focus , select:focus{
 }
 
 .actions button,
-.list select {
+.list select, .list button {
   text-transform: uppercase;
   padding: 0.8rem 2.4rem;
   font-size: 1.4rem;
