@@ -7,8 +7,22 @@ const messages = [
 ];
 
 function App(){
+    
+    return(
+        <div>
+            <Steps />
+            <StepMessage steps={1}>Hello How are you👋</StepMessage>
+            <StepMessage steps={2}>🖐 Good Buddy</StepMessage>
+            <StepMessage steps={3}>
+                <span>🙋‍♀️</span>
+                <p>Ok Bye</p>
+                <span>🙋‍♂️</span>
+            </StepMessage>
+        </div>
+    );
+}
 
-    //state in Component
+function Steps(){
     const [step, setStep] = useState(1);
     const [isOpen, setIsOpen] = useState(true);
 
@@ -33,20 +47,38 @@ function App(){
                 <div className={ step>=3 ? "active" : "" }>3</div>
             </div>
 
-            <p className="message">Step {step}: {messages[step-1]}</p>
+            <StepMessage steps={step} >
+                {messages[step-1]}
+             </StepMessage>
 
             <div className="buttons">
-                <button style={{backgroundColor:'#7950f2',color:"#fff"}}
-                onClick = {handlePrevious}
-                >Previous</button>
-                <button style={{backgroundColor:'#7950f2',color:"#fff"}} 
-                onClick = {() => {handleNext()}}
-                >Next</button>
+                
+                <Button textColor="#fff" bgColor="#7950f2" fn={handlePrevious} ><span>👈</span>Previous</Button>
+
+                <Button textColor="#fff" bgColor="#7950f2" fn={handleNext}>Next<span>👉</span></Button>
+
             </div>
         </div>
                 )
             }
         </>
+    );
+}
+
+function StepMessage({steps, children}){
+    return(
+        <div className="message">
+            <h3>Step {steps}: </h3>
+            {children}
+        </div>
+    );
+}
+
+function Button(props){
+    console.log(props);
+    console.log(props.children);
+    return (
+        <button style={{color:props.textColor, backgroundColor:props.bgColor}} onClick = {props.fn} >{props.children}</button>
     );
 }
 
