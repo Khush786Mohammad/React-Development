@@ -84,3 +84,7 @@ th{
     background-color: gray;
     text-align: end !important;
 }
+
+.added-list-items{
+    text-align: end !important;
+}
