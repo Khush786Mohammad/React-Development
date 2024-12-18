@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const tempMovieData = [
   {
@@ -50,31 +50,11 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-const myKEY = "d9ee8fd0";
-const KEY = 'f84fc31d';
-const query = 'avengers';
-
 export default function App() {
-  const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  console.log("how many times");
+  const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
 
-  useEffect(function(){
 
-    async function fetchMovies(){
-    setIsLoading(true);
-    const response = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=avengers`);
-    const data = await response.json();
-    setMovies(data.Search);
-    setIsLoading(false);
-    }
-    fetchMovies();
-  }, []);
-
-  
-
-    // setWatched([]);
     return (
         <>
         <NavBar>
@@ -83,9 +63,7 @@ export default function App() {
         <Main>
         {/* Another example of implicit props */}
           <Box>
-          {isLoading ? <Loader />:
             <MovieList movies={movies}/>
-          }
           </Box>
           <Box>
             <WatchedSummary watched={watched}/>
@@ -106,10 +84,6 @@ export default function App() {
         </Main>
         </>
     );
-}
-
-function Loader(){
-  return <p className="loader">Loading...</p>
 }
 
 function NavBar({children}){
