@@ -1,6 +1,30 @@
 import { useState, useEffect } from "react";
 import StarRating from "./StarRating";
 
+const tempMovieData = [
+  {
+    imdbID: "tt1375666",
+    Title: "Inception",
+    Year: "2010",
+    Poster:
+      "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+  },
+  {
+    imdbID: "tt0133093",
+    Title: "The Matrix",
+    Year: "1999",
+    Poster:
+      "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+  },
+  {
+    imdbID: "tt6751668",
+    Title: "Parasite",
+    Year: "2019",
+    Poster:
+      "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
+  },
+];
+
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
@@ -9,16 +33,11 @@ const KEY = 'f84fc31d';
 
 export default function App() {
   const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState();
-
-  // const [watched, setWatched] = useState([]);
-  const [watched, setWatched] = useState(function(){
-    const storedValue = localStorage.getItem('watched');
-    return JSON.parse(storedValue);
-  });
 
   function handleSelectMovie(id){
     setSelectedId((currId) => currId === id ? null : id);
@@ -30,16 +49,11 @@ export default function App() {
 
   function handleAndWatched(watch){
     setWatched((watched) => [...watched, watch]);
-    // localStorage.setItem('watched', JSON.stringify([...watched, watch]));
   }
 
   function handleDeletedWatched(id){
-    setWatched(watched.filter((watch)=> watch.imdbID !== id));
+    setWatched((watched) => watched.filter((movie)=> movie.imdbId !== id))
   }
-
-  useEffect(function(){
-    localStorage.setItem('watched',JSON.stringify(watched));
-  },[watched]);
 
   useEffect(function(){
     const controller = new AbortController();
@@ -160,12 +174,6 @@ function Logo(){
 
 function Search({query,setQuery}){
 
-  useEffect(function(){
-    const el = document.querySelector('.search');
-    // console.log(el);
-    el.focus();
-  },[]);
-
   return (
     <input
           className="search"
@@ -258,10 +266,6 @@ function MovieDetails({selectedId, onCloseMovie, onAddWatched, watched}){
     Director: director,
     Genre: genre,
   } = movie;
-
-  // if(imdbRating > 8) [isTop, setIsTop] = useState(false);
-
-  // if(imdbRating > 8) return <p>Greatest ever!</p>
 
   function handleAdd(){
     const newWatchedMovie = {
@@ -372,14 +376,14 @@ function WatchedSummary({watched}){
   const avgRuntime = average(watched.map((movie) => movie.runtime));
   return (
     <div className="summary">
-      <h2>Movies you watched</h2>
-      <div>
-        <Details emoji="#️⃣" content={watched.length}>movies</Details>
-        <Details emoji="⭐️" content={avgImdbRating.toFixed(2)}/>
-        <Details emoji="🌟" content={avgUserRating.toFixed(2)}/>
-        <Details emoji="⏳" content={avgRuntime.toFixed(0)}>min</Details>
-      </div>
-    </div>
+          <h2>Movies you watched</h2>
+          <div>
+            <Details emoji="#️⃣" content={watched.length}>movies</Details>
+            <Details emoji="⭐️" content={avgImdbRating.toFixed(2)}/>
+            <Details emoji="🌟" content={avgUserRating.toFixed(2)}/>
+            <Details emoji="⏳" content={avgRuntime.toFixed(0)}>min</Details>
+          </div>
+        </div>
   )
 }
 
