@@ -23,7 +23,6 @@ const initialState = {
   balance: 0,
   loan: 0,
   isActive: false,
-  loanTaken: 0,
 };
 
 function reducer(state, action){
@@ -39,10 +38,10 @@ function reducer(state, action){
       return {...state, balance: state.balance >= 50 ? state.balance - 50 : state.balance};
 
     case 'lend':
-      return {...state, loan: state.loanTaken === 0 ? 5000 : state.loan, balance: state.loanTaken === 0 ? state.balance+5000 : state.balance, loanTaken: 1};
+      return {...state, loan: state.loan === 0 ? 5000 : state.loan, balance: state.loan === 0 ? state.balance+5000 : state.balance};
     
     case 'payLoan':
-      return {...state, balance: state.balance >= 5000 ? state.balance-5000:state.balance, loan: state.balance >= 5000 ? 0 : state.loan, loanTaken: state.balance >= 5000 ? 0 : 1};
+      return {...state, balance: state.balance >= 5000 ? state.balance-5000:state.balance, loan: state.balance >= 5000 ? 0 : state.loan};
 
     case 'close':
       return {...initialState}
@@ -57,7 +56,7 @@ export default function App() {
   //using useReducer Hook
   const [state, dispatch] = useReducer(reducer, initialState);
   // destructring the state
-  const {balance, loan, isActive, loanTaken} = state;
+  const {balance, loan, isActive} = state;
 
   return (
     <div className="App">
@@ -81,12 +80,12 @@ export default function App() {
         </button>
       </p>
       <p>
-        <button onClick={() => {dispatch({type:'lend'})}} disabled={!isActive || loanTaken}>
+        <button onClick={() => {dispatch({type:'lend'})}} disabled={!isActive || loan}>
           Request a loan of 5000
         </button>
       </p>
       <p>
-        <button onClick={() => {dispatch({type:'payLoan'})}} disabled={!loanTaken}>
+        <button onClick={() => {dispatch({type:'payLoan'})}} disabled={!loan}>
           Pay loan
         </button>
       </p>
