@@ -20,7 +20,7 @@ body{
 }
 
 .container{
-    height: 350px;
+    height: 420px;
     width: 450px;
     background-color: #1A1A40;
     display: flex;
@@ -58,4 +58,62 @@ input[type="text"]:focus{
     cursor: pointer;
     padding: .5rem 1rem;
     border: 1px solid #8758ff
+}
+
+.list-items{
+    width: 100%;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 0.5rem;
+    overflow-y:scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+.list-items::-webkit-scrollbar{
+    appearance: none;
+}
+
+.tasks{
+    border: 1px solid #8758ff;
+    background-color: #8758ff;
+    color: white;
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.edit-icon, .trash{
+    color: white;
+    cursor: pointer;
+}
+
+.edit-icon:hover, .trash:hover{
+    color: red;
+    transition: all 0.5s;
+}
+
+.zero-task{
+    margin: auto;
+    color: white;
+    font-size: 30px;
+    filter: grayscale(80%);
+    user-select: none;
+    text-shadow: 2px 2px gray;
+}
+
+.completed{
+    color: #c5aeff;
+    text-decoration: line-through;
 }
