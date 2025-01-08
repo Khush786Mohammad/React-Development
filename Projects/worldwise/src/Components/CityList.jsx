@@ -3,9 +3,11 @@ import Spinner from './Spinner';
 import CityItem from './CityItem';
 import Message from './Message';
 
+import {useCities} from "../contexts/CitiesContext";
 // check prop-types of cities, isLoading to get rid of the error through by es-lint. Although code and build works fine.
 
-function CityList({cities, isLoading}){
+function CityList(){
+    const {cities, isLoading} = useCities();
     if(isLoading)
         return <Spinner />;
     if(!cities.length)
