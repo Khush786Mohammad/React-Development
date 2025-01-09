@@ -121,3 +121,10 @@ input[type="text"]:focus{
 .tsk{
     width: calc(100% - 20px);
 }
+
+@media (max-width: 465px){
+    .container{
+        width: 340px;
+    }
+}
+
