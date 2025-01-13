@@ -17,11 +17,13 @@ function App(){
     const [editTask, setEditTask] = useState("");
     const [compareTask, setCompareTask] = useState("");
 
-    function onHandleDelete(task){
+    function onHandleDelete(e,task){
+        e.stopPropagation();
         setTaskList((curr) => curr.filter((tsk)=> tsk !== task));
     }
 
-    function onHandleEdit(task){
+    function onHandleEdit(e,task){
+        e.stopPropagation();
         setEditTask(task);
         setCompareTask(task);
     }
@@ -107,11 +109,11 @@ function List({task, onDeleteTask, onEditTask}){
         setIsCompleted((isCompleted) => isCompleted = !isCompleted);
     }
     return (
-        <li className={isCompleted ? `completed tasks` : "tasks"} >
-            <p className="tsk" onClick={onHandleComplete}>{task}</p>
+        <li className={isCompleted ? `completed tasks` : "tasks"} onClick={onHandleComplete}>
+            <p>{task}</p>
             <div className="icons">
-                <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" onClick={()=>onEditTask(task)}/>
-                <FontAwesomeIcon icon={faTrash} className="trash" onClick={()=>onDeleteTask(task)}/>
+                <FontAwesomeIcon icon={faPenToSquare} className="edit-icon" onClick={(e)=>onEditTask(e,task)}/>
+                <FontAwesomeIcon icon={faTrash} className="trash" onClick={(e)=>onDeleteTask(e,task)}/>
             </div>
         </li>
     );

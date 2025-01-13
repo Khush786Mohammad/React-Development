@@ -118,10 +118,6 @@ input[type="text"]:focus{
     text-decoration: line-through;
 }
 
-.tsk{
-    width: calc(100% - 20px);
-}
-
 @media (max-width: 465px){
     .container{
         width: 340px;
