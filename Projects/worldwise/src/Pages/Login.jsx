@@ -12,7 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState("qwerty");
   const navigate = useNavigate();
 
-  const {user, isAuthenticated, login} = useAuth();
+  const {isAuthenticated, login} = useAuth();
 
   useEffect(function(){
     if(isAuthenticated)
